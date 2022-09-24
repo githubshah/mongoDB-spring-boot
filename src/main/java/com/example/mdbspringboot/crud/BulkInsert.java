@@ -1,7 +1,6 @@
 package com.example.mdbspringboot.crud;
 
 import com.mongodb.WriteConcern;
-import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.InsertOneModel;
@@ -13,7 +12,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 public class BulkInsert {
 
     @Autowired
