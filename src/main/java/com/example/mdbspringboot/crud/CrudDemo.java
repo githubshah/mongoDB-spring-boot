@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Component
+//@Component
 public class CrudDemo {
     ItemRepository groceryItemRepo;
 

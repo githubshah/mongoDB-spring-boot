@@ -1,14 +1,12 @@
 package com.example.mdbspringboot.crud;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
 import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.InsertOneModel;
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -18,25 +16,16 @@ import java.util.List;
 @Component
 public class BulkInsert {
 
-    @PostConstruct
-    public static void bulkInsert() {
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(new ConnectionString("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
-                .build();
+    @Autowired
+    MongoDatabase database;
 
-        MongoClient mongoClient = MongoClients.create(settings);
+    @PostConstruct
+    public void bulkInsert() {
 
         WriteConcern wc = new WriteConcern(0).withJournal(false);
-
-        String databaseName = "test";
         String collectionName = "testCollection";
-
-        System.out.println("Database: " + databaseName);
         System.out.println("Collection: " + collectionName);
         System.out.println("Write concern: " + wc);
-
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
-
         MongoCollection<Document> collection = database.getCollection(collectionName).withWriteConcern(wc);
 
         collection.deleteMany(new Document());
@@ -87,8 +76,6 @@ public class BulkInsert {
         }
 
         System.out.println("Avg: " + ((accTime / 1000.0) / iterations) + " seconds.");
-
-        mongoClient.close();
     }
 
     public static Document populateDoc() {
